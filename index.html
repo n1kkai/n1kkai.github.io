@@ -979,7 +979,7 @@ setInterval(() => {
   const nextImg = new Image();
   nextImg.src = slides[currentSlide];
   nextImg.onload = () => {
-    heroSlide.style.transition = 'opacity 0.8s ease';
+    heroSlide.style.transition = 'opacity 1.5s ease';
     heroSlide.style.opacity = '0';
     setTimeout(() => {
       heroSlide.src = slides[currentSlide];
@@ -987,11 +987,11 @@ setInterval(() => {
       heroSlide.style.opacity = '0';
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          heroSlide.style.transition = 'opacity 0.8s ease';
+          heroSlide.style.transition = 'opacity 1.5s ease';
           heroSlide.style.opacity = '1';
         });
       });
-    }, 300);
+    }, 1500);
   };
 }, 6000);
 </script>
