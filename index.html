@@ -8,9 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:      #1e1820;
---bg2:     #221c24;
---surface: #271f29;
+  --bg:         #0d0d0f;
+  --bg2:        #111115;
+  --surface:    #161619;
   --pink:       #c97a8f;
   --pink-hot:   #e8437a;
   --pink-dim:   rgba(201,122,143,0.15);
@@ -40,29 +40,29 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 50% 40% at 5% 10%, rgba(201,122,143,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 50% at 95% 80%, rgba(127,160,176,0.05) 0%, transparent 60%),
-    radial-gradient(ellipse 30% 30% at 50% 50%, rgba(232,67,122,0.03) 0%, transparent 60%);
+    radial-gradient(ellipse 70% 50% at 15% 20%, rgba(180,100,130,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 85% 75%, rgba(100,140,165,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(160,90,120,0.07) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* falling sparkles */
-.sparkle {
+/* floating particles */
+.particle {
   position: fixed;
-  top: -10px;
   pointer-events: none;
   z-index: 0;
   opacity: 0;
-  animation: fall-sparkle linear infinite;
   border-radius: 50%;
+  filter: blur(2px);
+  animation: drift linear infinite;
 }
 
-@keyframes fall-sparkle {
-  0%   { transform: translateY(0) scale(1); opacity: 0; }
-  8%   { opacity: 0.35; }
-  80%  { opacity: 0.15; }
-  100% { transform: translateY(105vh) scale(0.4); opacity: 0; }
+@keyframes drift {
+  0%   { transform: translateY(110vh) translateX(0px); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(-10vh) translateX(60px); opacity: 0; }
 }
 
 /* ── NAV ── */
@@ -572,19 +572,35 @@ footer {
 </head>
 <body>
 
-<!-- sparkles: pink & blue -->
-<div class="sparkle" style="left:8%;width:4px;height:6px;background:#c97a8f;animation-duration:7s;animation-delay:0s;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;"></div>
-<div class="sparkle" style="left:18%;width:3px;height:3px;background:#7fa0b0;animation-duration:9s;animation-delay:1.5s;"></div>
-<div class="sparkle" style="left:30%;width:5px;height:7px;background:#c97a8f;animation-duration:11s;animation-delay:0.8s;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;"></div>
-<div class="sparkle" style="left:43%;width:3px;height:3px;background:#7fa0b0;animation-duration:8s;animation-delay:3s;"></div>
-<div class="sparkle" style="left:55%;width:4px;height:4px;background:#c97a8f;animation-duration:13s;animation-delay:0s;"></div>
-<div class="sparkle" style="left:62%;width:3px;height:5px;background:#7fa0b0;animation-duration:7.5s;animation-delay:5s;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;"></div>
-<div class="sparkle" style="left:74%;width:5px;height:5px;background:#c97a8f;animation-duration:10s;animation-delay:2s;"></div>
-<div class="sparkle" style="left:85%;width:3px;height:6px;background:#7fa0b0;animation-duration:8.5s;animation-delay:4s;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;"></div>
-<div class="sparkle" style="left:92%;width:4px;height:4px;background:#c97a8f;animation-duration:12s;animation-delay:1s;"></div>
-<div class="sparkle" style="left:24%;width:3px;height:5px;background:#7fa0b0;animation-duration:9.5s;animation-delay:6s;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;"></div>
-<div class="sparkle" style="left:48%;width:3px;height:3px;background:#c97a8f;animation-duration:6.5s;animation-delay:2.5s;"></div>
-<div class="sparkle" style="left:70%;width:4px;height:6px;background:#7fa0b0;animation-duration:14s;animation-delay:0.3s;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;"></div>
+<div id="particles"></div>
+<script>
+(function(){
+  const colors = ['#c97a8f','#7fa0b0','#b87090','#6a90a0','#d4889a'];
+  const container = document.getElementById('particles');
+  const count = 28;
+  for(let i = 0; i < count; i++){
+    const el = document.createElement('div');
+    el.className = 'particle';
+    const size = 6 + Math.random() * 28; // 6px〜34px
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const duration = 18 + Math.random() * 22; // 18s〜40s ゆっくり
+    const delay = -(Math.random() * duration); // 最初からバラバラに
+    const left = Math.random() * 100;
+    const opacity = 0.08 + Math.random() * 0.18; // 薄め
+    el.style.cssText = `
+      left:${left}%;
+      width:${size}px;
+      height:${size}px;
+      background:${color};
+      animation-duration:${duration}s;
+      animation-delay:${delay}s;
+      opacity:0;
+      filter:blur(${2 + size * 0.15}px);
+    `;
+    container.appendChild(el);
+  }
+})();
+</script>
 
 <nav>
   <div class="nav-name">肉塊 / NIKKAI</div>
@@ -605,7 +621,7 @@ footer {
       肉塊<br><em>NIKKAI</em>
     </h1>
     <p class="hero-tagline fade-in">
-      可愛いへの渇望と痛みを描いています。
+      「美しくありたい」という渇望と、<br>それが叶わない痛みを描いています。
     </p>
   </div>
 
@@ -630,10 +646,10 @@ footer {
   <div class="about-grid">
     <div class="about-text fade-in">
       <p>
-        色鉛筆とアクリル絵具を主に使用し、<strong>可愛いへの渇望と痛み</strong>をテーマに描いています。
+        色鉛筆とアクリル絵具を主に使用し、<strong>「美しくありたい」という渇望と、それが叶わない痛み</strong>をテーマに描いています。
       </p>
       <p>
-        やわらかな質感とくすみカラーを軸に、ダークな世界観から晴れやかな場面まで幅広く描いています。
+        やわらかな質感とくすみカラーを軸に、ダークな世界観からブライダルのような晴れやかな場面まで幅広く描いています。
       </p>
     </div>
 
