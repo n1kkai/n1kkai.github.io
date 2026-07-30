@@ -11,7 +11,7 @@
 --bg:      #cdcbd1;
 --bg2:     #c9c5d1;
 --surface: #cac4cf;
-  --pink:       #e6d3d8;
+ --pink: #8a6070;
   --pink-hot:   #e8437a;
   --pink-dim:   rgba(201,122,143,0.15);
   --blue:       #cfdce3;
@@ -74,7 +74,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1.4rem 4rem;
-  background: rgba(13,13,15,0.85);
+  background: rgba(232,228,240,0.85);
   backdrop-filter: blur(16px);
   border-bottom: 0.5px solid var(--border);
 }
@@ -574,32 +574,7 @@ footer {
 
 <div id="particles"></div>
 <script>
-(function(){
-  const colors = ['#b8849a','#8a9eb0','#c4a0b0','#7a9aaa','#a87890'];
-  const container = document.getElementById('particles');
-  const count = 28;
-  for(let i = 0; i < count; i++){
-    const el = document.createElement('div');
-    el.className = 'particle';
-    const size = 6 + Math.random() * 28; // 6px〜34px
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const duration = 18 + Math.random() * 22; // 18s〜40s ゆっくり
-    const delay = -(Math.random() * duration); // 最初からバラバラに
-    const left = Math.random() * 100;
-    const opacity = 0.08 + Math.random() * 0.18; // 薄め
-    el.style.cssText = `
-      left:${left}%;
-      width:${size}px;
-      height:${size}px;
-      background:${color};
-      animation-duration:${duration}s;
-      animation-delay:${delay}s;
-      opacity:0;
-      filter:blur(${2 + size * 0.15}px);
-    `;
-    container.appendChild(el);
-  }
-})();
+
 </script>
 
 <nav>
