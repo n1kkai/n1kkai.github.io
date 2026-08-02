@@ -11,7 +11,7 @@
 --bg:      #cdcbd1;
 --bg2:     #c9c5d1;
 --surface: #cac4cf;
- --pink: #8a6070;
+ --pink: #c95b7c;
   --pink-hot:   #e8437a;
   --pink-dim:   rgba(201,122,143,0.15);
   --blue:       #cfdce3;
@@ -19,8 +19,8 @@
   --text:    #1a1a1a;
 --text-sub:#4a4a4a;
 --text-dim:#888888;
-  --border:     rgba(200,160,180,0.08);
-  --border-mid: rgba(200,160,180,0.18);
+  --border:     rgba(200,160,170,0.08);
+  --border-mid: rgba(200,160,170,0.18);
   --serif:      'Cormorant Garamond', 'Shippori Mincho', serif;
   --sans:       'Zen Kaku Gothic New', sans-serif;
 }
@@ -828,7 +828,12 @@ const heroSlide = document.getElementById('hero-slide');
 const heroBg = document.getElementById('hero-bg');
 
 function updateBg(src) {
-  heroBg.style.backgroundImage = `url(${src})`;
+  heroBg.style.transition = 'opacity 0.8s ease';
+  heroBg.style.opacity = '0';
+  setTimeout(() => {
+    heroBg.style.backgroundImage = `url(${src})`;
+    heroBg.style.opacity = '0.15';
+  }, 800);
 }
 updateBg(slides[0]);
 
